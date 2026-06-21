@@ -48,13 +48,21 @@ def plan_route(
     geo: str = "euclidean",
     consequence: str = "normal",
     run_self_review: bool = False,
+    time_limit_s: int = 10,
+    solution_limit: int | None = 200,
 ) -> RouteOutcome:
-    """Run the pipeline on one request and return a verified route or a refusal."""
+    """Run the pipeline on one request and return a verified route or a refusal.
+
+    time_limit_s and solution_limit bound the solver. The defaults return fast on
+    the sizes this tool targets. Raise them for a larger or harder instance.
+    """
     path = Path(request) if not isinstance(request, Path) else request
     is_file = path.exists()
 
     if is_file and structured.detect(path):
-        return _plan_structured(path, geo=geo)
+        return _plan_structured(
+            path, geo=geo, time_limit_s=time_limit_s, solution_limit=solution_limit
+        )
 
     text = natural_language.read(path if is_file else request)
     return _plan_natural_language(
@@ -63,17 +71,24 @@ def plan_route(
         geo=geo,
         consequence=consequence,
         run_self_review=run_self_review,
+        time_limit_s=time_limit_s,
+        solution_limit=solution_limit,
     )
 
 
-def _plan_structured(path: Path, *, geo: str) -> RouteOutcome:
+def _plan_structured(
+    path: Path, *, geo: str, time_limit_s: int, solution_limit: int | None
+) -> RouteOutcome:
     parsed = structured.parse(path)
     g = guard.classify_structured(parsed)
     if not g.in_scope:
         return RouteOutcome(None, None, None, False, g.reason, "structured", refused=True)
 
     spec = modeler.model_structured(parsed)
-    return _solve_and_gate(spec, g, review=None, mode="structured", geo=geo, consequence="normal")
+    return _solve_and_gate(
+        spec, g, review=None, mode="structured", geo=geo, consequence="normal",
+        time_limit_s=time_limit_s, solution_limit=solution_limit,
+    )
 
 
 def _plan_natural_language(
@@ -83,6 +98,8 @@ def _plan_natural_language(
     geo: str,
     consequence: str,
     run_self_review: bool,
+    time_limit_s: int,
+    solution_limit: int | None,
 ) -> RouteOutcome:
     g = guard.classify_text(text)
     if not g.in_scope:
@@ -103,7 +120,10 @@ def _plan_natural_language(
     if run_self_review:
         review = self_review.review(text, result.extracted_params, model_client=model_client)
 
-    return _solve_and_gate(spec, g, review=review, mode="natural_language", geo=geo, consequence=consequence)
+    return _solve_and_gate(
+        spec, g, review=review, mode="natural_language", geo=geo, consequence=consequence,
+        time_limit_s=time_limit_s, solution_limit=solution_limit,
+    )
 
 
 def _solve_and_gate(
@@ -114,9 +134,13 @@ def _solve_and_gate(
     mode: str,
     geo: str,
     consequence: str,
+    time_limit_s: int,
+    solution_limit: int | None,
 ) -> RouteOutcome:
     provider = provider_for(spec, geo=geo)
-    result = solve(spec, cost_provider=provider)
+    result = solve(
+        spec, cost_provider=provider, time_limit_s=time_limit_s, solution_limit=solution_limit
+    )
     if result["status"] != "optimal":
         reason = verifier.diagnose_infeasibility(spec, cost_provider=provider)
         return RouteOutcome(None, None, None, False, reason, mode, refused=False)
@@ -154,7 +178,16 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--geo", choices=["euclidean", "haversine"], default="euclidean")
     parser.add_argument("--consequence", choices=["normal", "high"], default="normal")
     parser.add_argument("--self-review", action="store_true", help="run the second-pass input check")
+    parser.add_argument(
+        "--time-limit", type=int, default=10,
+        help="solver time budget in seconds (raise for large instances)",
+    )
+    parser.add_argument(
+        "--solution-limit", type=int, default=200,
+        help="stop the solver after this many solutions; 0 runs to the time budget",
+    )
     args = parser.parse_args(argv)
+    solution_limit = None if args.solution_limit == 0 else args.solution_limit
 
     model_client = None
     path = Path(args.request)
@@ -173,6 +206,8 @@ def main(argv: list[str] | None = None) -> int:
         geo=args.geo,
         consequence=args.consequence,
         run_self_review=args.self_review,
+        time_limit_s=args.time_limit,
+        solution_limit=solution_limit,
     )
     _print_outcome(outcome)
     return 0 if outcome.verified else 1

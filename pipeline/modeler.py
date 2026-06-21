@@ -26,6 +26,13 @@ def load_prompt(name: str) -> str:
     return (PROMPTS_DIR / name).read_text()
 
 
+def _service_time(value) -> int | list[int]:
+    """Carry a service time through as a single value or one value per stop."""
+    if isinstance(value, list):
+        return [int(v) for v in value]
+    return int(value)
+
+
 def model_structured(parsed: dict) -> ProblemSpec:
     """Build a spec from a parsed structured request. No model is used."""
     if parsed["kind"] == "driving":
@@ -33,7 +40,7 @@ def model_structured(parsed: dict) -> ProblemSpec:
         return ProblemSpec(
             kind="driving",
             n=len(coords),
-            service_time=int(parsed["service_time"]),
+            service_time=_service_time(parsed["service_time"]),
             time_windows=[list(w) for w in parsed["time_windows"]],
             coordinates=coords,
             speed=float(parsed["speed"]),
@@ -42,7 +49,7 @@ def model_structured(parsed: dict) -> ProblemSpec:
     return ProblemSpec(
         kind="machine_scheduling",
         n=len(matrix),
-        service_time=int(parsed["service_time"]),
+        service_time=_service_time(parsed["service_time"]),
         time_windows=[list(w) for w in parsed["time_windows"]],
         cost_matrix=matrix,
     )

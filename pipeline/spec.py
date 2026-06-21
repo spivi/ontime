@@ -20,14 +20,16 @@ class ProblemSpec:
 
     For driving, set coordinates and speed and leave cost_matrix as None. For
     machine scheduling, set cost_matrix (the changeover matrix) and leave
-    coordinates and speed as None. service_time is the per-stop service or
-    processing time. time_windows are [open, close] for driving and
-    [release, due] for machine scheduling. Index 0 is the depot or the start.
+    coordinates and speed as None. service_time is the service or processing
+    time charged on departure from a non-start stop. It can be a single value
+    shared by every stop, or a list with one value per stop so different stops
+    can carry different service times. time_windows are [open, close] for driving
+    and [release, due] for machine scheduling. Index 0 is the depot or the start.
     """
 
     kind: str
     n: int
-    service_time: int
+    service_time: int | list[int]
     time_windows: list[list[int]]
     coordinates: list[list[float]] | None = None
     speed: float | None = None
@@ -53,6 +55,22 @@ class ProblemSpec:
                 len(row) != self.n for row in self.cost_matrix
             ):
                 raise ValueError("cost_matrix must be square with side n")
+        if isinstance(self.service_time, list) and len(self.service_time) != self.n:
+            raise ValueError(
+                f"service_time list has {len(self.service_time)} entries for n={self.n}"
+            )
+
+    def service_for(self, node: int) -> int:
+        """Service time charged when departing this stop.
+
+        The start has no service time. A scalar service_time applies to every
+        other stop. A list carries one value per stop.
+        """
+        if node == 0:
+            return 0
+        if isinstance(self.service_time, list):
+            return int(self.service_time[node])
+        return int(self.service_time)
 
 
 class CostProvider(Protocol):

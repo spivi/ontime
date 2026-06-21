@@ -14,8 +14,13 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 
-DRIVING_HINTS = ("stop", "window", "arrive", "deliver", "errand", "address", "depot", "visit")
-SCHEDULING_HINTS = ("job", "machine", "changeover", "release", "due", "process", "setup")
+DRIVING_HINTS = (
+    "stop", "window", "arrive", "deliver", "errand", "address", "depot", "visit",
+    "route", "pick up", "drop off", "by 5pm", "by noon", "before",
+)
+SCHEDULING_HINTS = (
+    "job", "machine", "changeover", "release", "due", "process", "setup", "schedule",
+)
 
 
 @dataclass
@@ -38,15 +43,16 @@ def classify_structured(parsed: dict) -> GuardDecision:
 def classify_text(text: str) -> GuardDecision:
     """Decide scope from raw text using keyword hints.
 
-    This is the fallback when no model client is available. It looks for the
-    vocabulary of a stops-with-windows problem and the presence of any time
-    bounds.
+    This is the fallback when no model client is available. One clear hint is
+    enough to let a request through, so a short valid request is not turned away.
+    The modeler does the real reading; the guard only keeps plainly off-topic text
+    out.
     """
     lowered = text.lower()
     driving = sum(1 for w in DRIVING_HINTS if w in lowered)
     scheduling = sum(1 for w in SCHEDULING_HINTS if w in lowered)
-    if scheduling > driving and scheduling >= 2:
+    if scheduling > driving and scheduling >= 1:
         return GuardDecision(True, "machine_scheduling", "reads as one-machine scheduling")
-    if driving >= 2:
+    if driving >= 1:
         return GuardDecision(True, "driving", "reads as stops with arrival windows")
     return GuardDecision(False, "unknown", "the request does not read as a stops-with-windows problem")

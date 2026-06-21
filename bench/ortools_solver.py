@@ -33,7 +33,7 @@ def _build_time_matrix(coords: Sequence[Sequence[float]], speed: float) -> List[
 
 def solve(
     coords: Sequence[Sequence[float]] | None,
-    service_time: int,
+    service_time: int | Sequence[int],
     time_windows: Sequence[Tuple[int, int]],
     speed: float = 50.0,
     time_limit_s: int = 30,
@@ -41,6 +41,9 @@ def solve(
     solution_limit: int | None = None,
 ) -> Dict[str, Any]:
     """Solve a single-vehicle TSP-TW and return status, tour, arrivals, total_time.
+
+    service_time is the time charged on departure from a non-start stop. It can be
+    a single value shared by every stop, or a list with one value per stop.
 
     The guided local search metaheuristic keeps improving until it runs out of
     time, so the time limit is a ceiling rather than the time the solve takes. Set
@@ -65,7 +68,13 @@ def solve(
             "message": f"time_windows length {len(time_windows)} != n {n}",
         }
 
-    horizon = max(int(w[1]) for w in time_windows) + service_time * n + 1
+    if isinstance(service_time, (list, tuple)):
+        service = [int(s) for s in service_time]
+    else:
+        service = [int(service_time)] * n
+    service[0] = 0  # the start has no service time
+
+    horizon = max(int(w[1]) for w in time_windows) + sum(service) + 1
 
     manager = pywrapcp.RoutingIndexManager(n, 1, 0)
     routing = pywrapcp.RoutingModel(manager)
@@ -73,8 +82,7 @@ def solve(
     def time_callback(from_index: int, to_index: int) -> int:
         from_node = manager.IndexToNode(from_index)
         to_node = manager.IndexToNode(to_index)
-        srv = service_time if from_node != 0 else 0
-        return matrix[from_node][to_node] + srv
+        return matrix[from_node][to_node] + service[from_node]
 
     transit_idx = routing.RegisterTransitCallback(time_callback)
 

@@ -35,7 +35,6 @@ def verify(
     matrix = provider.matrix(spec)
     n = spec.n
     windows = spec.time_windows
-    service_time = int(spec.service_time)
 
     if not isinstance(tour, list) or any(not isinstance(c, int) for c in tour):
         return VerifyResult(False, "tour must be a list of integers", None)
@@ -60,8 +59,7 @@ def verify(
     t = 0.0
     for k in range(1, len(tour)):
         prev, curr = tour[k - 1], tour[k]
-        srv = service_time if prev != 0 else 0
-        t = t + matrix[prev][curr] + srv
+        t = t + matrix[prev][curr] + spec.service_for(prev)
         lo, hi = windows[curr]
         if t > hi:
             return VerifyResult(
@@ -89,7 +87,6 @@ def diagnose_infeasibility(
     """
     provider = cost_provider if cost_provider is not None else provider_for(spec)
     matrix = provider.matrix(spec)
-    service_time = int(spec.service_time)
 
     worst_stop = None
     worst_slack = None

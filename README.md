@@ -55,6 +55,103 @@ The open 7B declines to call the tool on a share of raw text requests, around
 7.5% in the benchmark. When that happens, fall back to structured input, or
 escalate that one request to a stronger model.
 
+## A worked example, end to end
+
+Say you have a real afternoon of errands and you want an order that gets you to
+each place inside its window. Here is the whole path from the real problem to a
+verified route.
+
+### Step 1: write down the problem
+
+You have a start point and a few stops. Each stop has a location, a window when a
+visit is allowed, and a few minutes of time spent there.
+
+- Home, your start, at map point (0, 0).
+- Pharmacy at (2, 1), open between minute 30 and minute 90, 3 minutes inside.
+- Hardware store at (5, 4), open between 15 and 40, 3 minutes inside.
+- Post office at (1, 6), open between 0 and 30, 3 minutes inside.
+- Bakery at (4, 2), open between 25 and 70, 3 minutes inside.
+
+You travel at 0.5 distance units per minute.
+
+### Step 2: shape it into a file
+
+Put one row per stop. The first row is the start and carries the speed. The
+coordinates are plain map points here, so the default cost source measures
+straight-line distance. Use `lat` and `lon` columns instead of `x` and `y` when
+your points are real latitude and longitude, and add `--geo haversine`.
+
+```
+name,x,y,open,close,service,speed
+home,0,0,0,600,0,0.5
+pharmacy,2,1,30,90,3,0.5
+hardware store,5,4,15,40,3,0.5
+post office,1,6,0,30,3,0.5
+bakery,4,2,25,70,3,0.5
+```
+
+This is the file at `examples/driving/stops.csv`.
+
+### Step 3: run it
+
+```
+.venv/bin/python route.py examples/driving/stops.csv
+```
+
+```
+verified route (structured)
+  order: 0 -> 3 -> 2 -> 4 -> 1 -> 0
+  arrivals: [0, 12, 24, 31, 38, 45]
+  completion time: 45
+```
+
+### Step 4: read the result
+
+The order maps back to your stops by row number. Stop 0 is home, stop 3 is the
+post office, stop 2 is the hardware store, stop 4 is the bakery, stop 1 is the
+pharmacy. So the route is home, post office, hardware store, bakery, pharmacy,
+home. The arrivals line gives the minute you reach each one, and the completion
+time is when you get back home, at minute 45. The word verified means the route
+was checked against every window before it was printed.
+
+### Step 5: when there is no answer
+
+Suppose the post office instead closed at minute 1, which you cannot reach in
+time. ontime says so and names the stop rather than handing back a route that
+breaks the window.
+
+```
+no verified route (structured)
+  reason: stop 3 cannot be met: the fastest arrival is 12, after its window closes at 1
+```
+
+### The same problem in plain language
+
+If you would rather describe the afternoon in words, write it out and let a
+self-hosted model read it into the same structure. The file
+`examples/driving/day.txt` is the errand list above written as prose.
+
+```
+export ONTIME_LLM_BASE_URL=http://localhost:8000/v1
+export ONTIME_LLM_MODEL=qwen2.5-7b-instruct
+.venv/bin/python route.py examples/driving/day.txt
+```
+
+The model reads the stops, windows, service times, and speed out of the text and
+calls the solver. The route still passes through the same feasibility gate, so a
+window-breaking answer is refused the same way.
+
+### A scheduling problem is the same shape
+
+One machine running jobs in an order is the same problem with no map. The
+changeover time between jobs is the cost, the release-to-due time is the window,
+and the processing time is the service time. See
+`examples/machine_scheduling/jobs.csv` and its `changeover.csv`, then run:
+
+```
+.venv/bin/python route.py examples/machine_scheduling/jobs.csv
+```
+
 ## Architecture
 
 Each module is one layer of the pipeline. See
@@ -83,8 +180,9 @@ the solver returns is checked against the travel times it was built on.
 
 ## The honesty boundary
 
-The measured spine is the interface jump, the marshaling mechanism, and the
-feasibility gate. Those are the parts the benchmark put numbers on.
+The measured spine has two parts that the benchmark put numbers on: the interface
+jump that the marshaling mechanism produces, and the feasibility gate that the
+verifier enforces.
 
 - The interface jump lives in the marshaling layer. When the numbers are handed
   to the model already shaped, the trivial-copy path reaches the optimum on every
@@ -115,9 +213,25 @@ verifier the tool uses. `results/` holds the run logs that back every number.
 .venv/bin/python -m pytest
 ```
 
+## Tuning the solver
+
+The solver defaults return fast on the sizes this tool targets. They stop after
+200 solutions or 10 seconds, whichever comes first. A large instance may need a
+longer budget to reach the optimum. Raise both limits on the command line.
+
+```
+.venv/bin/python route.py stops.csv --time-limit 60 --solution-limit 0
+```
+
+A solution limit of 0 lets the solver run to the time budget.
+
 ## Scope
 
 This is a complete reference implementation of the architecture, not a product
-with a roadmap. It runs end to end on a self-hosted 7B with no paid dependency on
-the haversine default, and it returns a verified route or a clear infeasibility
-report that names the stop that cannot be made.
+with a roadmap. It plans for one vehicle that starts at the depot, visits every
+stop once, and returns to the depot. Many vehicles at once is vehicle routing,
+which this does not cover.
+
+It runs end to end on a self-hosted 7B with no paid dependency on the haversine
+default, and it returns a verified route or a clear infeasibility report that
+names the stop that cannot be made.

@@ -34,15 +34,24 @@ def _parse_json(path: Path) -> dict:
             "kind": "machine_scheduling",
             "cost_matrix": [[int(v) for v in row] for row in data["cost_matrix"]],
             "time_windows": [[int(w[0]), int(w[1])] for w in data["time_windows"]],
-            "service_time": int(data["service_time"]),
+            "service_time": _read_service_time(data["service_time"]),
         }
     return {
         "kind": "driving",
         "coordinates": [[float(c[0]), float(c[1])] for c in data["coordinates"]],
         "time_windows": [[int(w[0]), int(w[1])] for w in data["time_windows"]],
-        "service_time": int(data["service_time"]),
+        "service_time": _read_service_time(data["service_time"]),
         "speed": float(data["speed"]),
     }
+
+
+def _read_service_time(value) -> int | list[int]:
+    """Read a service time that may be a single value or one value per stop."""
+    if isinstance(value, list):
+        out = [int(v) for v in value]
+        out[0] = 0  # the start has no service time
+        return out
+    return int(value)
 
 
 def _parse_csv(path: Path) -> dict:
@@ -58,31 +67,31 @@ def _parse_csv(path: Path) -> dict:
 def _parse_driving_csv(rows: list[dict]) -> dict:
     coordinates: list[list[float]] = []
     windows: list[list[int]] = []
-    service_values: list[int] = []
+    service_times: list[int] = []
     for r in rows:
         x = float(r.get("lat", r.get("x")))
         y = float(r.get("lon", r.get("y")))
         coordinates.append([x, y])
         windows.append([int(r["open"]), int(r["close"])])
-        service_values.append(int(r.get("service", 0)))
-    service_time = max(s for s in service_values[1:]) if len(service_values) > 1 else 0
+        service_times.append(int(r.get("service", 0)))
+    service_times[0] = 0  # the start has no service time
     speed = float(rows[0].get("speed", 50.0))
     return {
         "kind": "driving",
         "coordinates": coordinates,
         "time_windows": windows,
-        "service_time": service_time,
+        "service_time": service_times,
         "speed": speed,
     }
 
 
 def _parse_machine_scheduling_csv(path: Path, rows: list[dict]) -> dict:
     windows: list[list[int]] = []
-    processing_values: list[int] = []
+    processing_times: list[int] = []
     for r in rows:
         windows.append([int(r["release"]), int(r["due"])])
-        processing_values.append(int(r["processing"]))
-    service_time = max(p for p in processing_values[1:]) if len(processing_values) > 1 else 0
+        processing_times.append(int(r["processing"]))
+    processing_times[0] = 0  # the start state has no processing time
 
     matrix_path = path.with_name("changeover.csv")
     if not matrix_path.exists():
@@ -96,5 +105,5 @@ def _parse_machine_scheduling_csv(path: Path, rows: list[dict]) -> dict:
         "kind": "machine_scheduling",
         "cost_matrix": matrix,
         "time_windows": windows,
-        "service_time": service_time,
+        "service_time": processing_times,
     }
