@@ -1,0 +1,3 @@
+# Optional. Only needed to serve the reading model on a Modal cloud GPU through
+# `python -m ontime.serve`. The core tool and the structured path do not need it.
+modal>=0.64

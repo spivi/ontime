@@ -24,7 +24,7 @@ def test_machine_scheduling_structured_example_runs():
 
 
 @pytest.mark.skipif(
-    not os.getenv("ONTIME_LLM_BASE_URL"),
+    not os.getenv("ONTIME_LLM_BASE_URL", "").strip(),
     reason="natural-language path needs a self-hosted model endpoint",
 )
 def test_driving_text_example_runs():

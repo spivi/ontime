@@ -16,6 +16,7 @@ infeasible problem the report names the stop and the window that cannot be met.
 from __future__ import annotations
 
 import argparse
+import os
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -50,6 +51,26 @@ class RouteOutcome:
             self.route, self.arrivals,
             names=self.names, time_windows=self.time_windows, unit=unit,
         )
+
+
+def _load_env_file() -> None:
+    """Read key=value lines from a .env file into the environment if present.
+
+    An existing environment variable wins, so an explicit export is not
+    overridden. This is how the endpoint written by the serve utility reaches
+    the model client.
+    """
+    env_path = Path(__file__).resolve().parent / ".env"
+    if not env_path.exists():
+        return
+    for line in env_path.read_text().splitlines():
+        stripped = line.strip()
+        if not stripped or stripped.startswith("#") or "=" not in stripped:
+            continue
+        key, _, value = stripped.partition("=")
+        key, value = key.strip(), value.strip()
+        if key and value and key not in os.environ:
+            os.environ[key] = value
 
 
 def plan_route(
@@ -209,6 +230,10 @@ def main(argv: list[str] | None = None) -> int:
     )
     args = parser.parse_args(argv)
     solution_limit = None if args.solution_limit == 0 else args.solution_limit
+
+    # Load a .env file if one is present, so the endpoint written by
+    # `python -m ontime.serve up` is picked up without exporting it by hand.
+    _load_env_file()
 
     model_client = None
     path = Path(args.request)

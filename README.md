@@ -73,6 +73,39 @@ runs and the verified result. The open 7B declines to call the tool on a share o
 raw text requests, around 7.5% in the benchmark. When that happens, fall back to
 structured input, or escalate that one request to a stronger model.
 
+### Serving the model on a cloud GPU
+
+The natural-language path needs a model behind an OpenAI-compatible endpoint. A
+laptop can serve a 7B through Ollama or llama.cpp, which needs no account and is
+free. A cloud GPU is faster and is one command away. The serve utility runs vLLM
+on a Modal GPU, waits until it is healthy, and writes the endpoint into a `.env`
+file that `route.py` reads on its own.
+
+It needs the optional serving dependency and a one-time Modal login:
+
+```
+.venv/bin/python -m pip install -r requirements-serve.txt
+modal token new
+```
+
+Then bring an endpoint up, check it, run a request, and bring it down:
+
+```
+.venv/bin/python -m ontime.serve up
+.venv/bin/python -m ontime.serve test
+.venv/bin/python route.py examples/driving/day.txt --schedule
+.venv/bin/python -m ontime.serve down
+```
+
+`up` deploys the app, waits for the endpoint to answer a health check, and writes
+`ONTIME_LLM_BASE_URL` and `ONTIME_LLM_MODEL` into `.env`. Pass a model id to serve
+a different model, for example
+`python -m ontime.serve up meta-llama/Llama-3.1-8B-Instruct`. The default is
+`Qwen/Qwen2.5-7B-Instruct`. The endpoint scales to zero two minutes after the last
+request, so an idle endpoint costs nothing, and `down` stops it and clears the
+endpoint from `.env`. The Modal app is defined in `serve/modal_app.py`, with tool
+calling enabled, which the modeler needs.
+
 ## A worked example, end to end
 
 Say you have a real afternoon of errands and you want an order that gets you to
@@ -296,9 +329,14 @@ verifier enforces.
 
 The classifier guard and the self-review loop are scaffolding that makes the core
 safe on messy input. The self-review is honest about its cost. It has full recall
-on the dangerous class, but it is noisy. In the benchmark it fired on 34.6% of the
-natural-language runs and rose with problem size, so it is off by default and
-switched on by consequence.
+on the dangerous class while staying noisy. In the benchmark it fired on 34.6% of
+the natural-language runs and climbed toward 45% at the larger sizes, so it is off
+by default and switched on by consequence.
+
+The refusal weakness sits on the open 7B. It declined to call the tool on about
+7.5% of raw text requests, where the frontier model declined on none. When the 7B
+declines, fall back to the structured file or escalate that one request to the
+frontier model.
 
 All numbers in this section come from `results/summary.json`, which is generated
 from the run logs by `python -m ontime.bench.analysis`. See `results/NUMBERS.md`
