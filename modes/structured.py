@@ -68,12 +68,14 @@ def _parse_driving_csv(rows: list[dict]) -> dict:
     coordinates: list[list[float]] = []
     windows: list[list[int]] = []
     service_times: list[int] = []
+    names: list[str] = []
     for r in rows:
         x = float(r.get("lat", r.get("x")))
         y = float(r.get("lon", r.get("y")))
         coordinates.append([x, y])
         windows.append([int(r["open"]), int(r["close"])])
         service_times.append(int(r.get("service", 0)))
+        names.append(r.get("name", ""))
     service_times[0] = 0  # the start has no service time
     speed = float(rows[0].get("speed", 50.0))
     return {
@@ -82,15 +84,18 @@ def _parse_driving_csv(rows: list[dict]) -> dict:
         "time_windows": windows,
         "service_time": service_times,
         "speed": speed,
+        "names": names,
     }
 
 
 def _parse_machine_scheduling_csv(path: Path, rows: list[dict]) -> dict:
     windows: list[list[int]] = []
     processing_times: list[int] = []
+    names: list[str] = []
     for r in rows:
         windows.append([int(r["release"]), int(r["due"])])
         processing_times.append(int(r["processing"]))
+        names.append(r.get("job", ""))
     processing_times[0] = 0  # the start state has no processing time
 
     matrix_path = path.with_name("changeover.csv")
@@ -106,4 +111,5 @@ def _parse_machine_scheduling_csv(path: Path, rows: list[dict]) -> dict:
         "cost_matrix": matrix,
         "time_windows": windows,
         "service_time": processing_times,
+        "names": names,
     }

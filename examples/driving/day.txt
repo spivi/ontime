@@ -1,6 +1,7 @@
 I am running errands today and I want a route that gets me to each place inside
-its time window. I start from home at coordinates (0, 0) at time zero. My speed is
-0.5 distance units per minute and I spend 3 minutes at each stop.
+its time window. I start from home at coordinates (0, 0) at time zero, and I need
+to be back home by 600 minutes. My speed is 0.5 distance units per minute and I
+spend 3 minutes at each stop.
 
 Here are the stops and the windows, in minutes from now.
 

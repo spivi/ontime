@@ -39,6 +39,23 @@ The reliable path. The numbers arrive already shaped, so no model is involved.
 
 Each returns a verified route with arrival times and a completion time.
 
+Add `--schedule` to get the same answer as a readable plan, using the names from
+the file:
+
+```
+.venv/bin/python route.py examples/driving/stops.csv --schedule
+```
+
+```
+Leave home at 0 min.
+Arrive at post office at 12 min. The window runs 0 to 30, so you are on time.
+Arrive at hardware store at 24 min. The window runs 15 to 40, so you are on time.
+Arrive at bakery at 31 min. The window runs 25 to 70, so you are on time.
+Arrive at pharmacy at 38 min. The window runs 30 to 90, so you are on time.
+Return to home at 45 min.
+The whole run takes 45 min.
+```
+
 ### Natural-language mode
 
 The showcase path. A self-hosted model reads a text request into the structure.
@@ -51,9 +68,10 @@ export ONTIME_LLM_MODEL=qwen2.5-7b-instruct
 .venv/bin/python route.py examples/driving/day.txt
 ```
 
-The open 7B declines to call the tool on a share of raw text requests, around
-7.5% in the benchmark. When that happens, fall back to structured input, or
-escalate that one request to a stronger model.
+The worked example below shows the full request next to the six phases the system
+runs and the verified result. The open 7B declines to call the tool on a share of
+raw text requests, around 7.5% in the benchmark. When that happens, fall back to
+structured input, or escalate that one request to a stronger model.
 
 ## A worked example, end to end
 
@@ -127,9 +145,24 @@ no verified route (structured)
 
 ### The same problem in plain language
 
-If you would rather describe the afternoon in words, write it out and let a
-self-hosted model read it into the same structure. The file
-`examples/driving/day.txt` is the errand list above written as prose.
+You do not have to shape the file by hand. Describe the afternoon in words and let
+a self-hosted model read it into the same structure. The file
+`examples/driving/day.txt` is the errand list above written as prose:
+
+```
+I am running errands today and I want a route that gets me to each place inside
+its time window. I start from home at coordinates (0, 0) at time zero, and I need
+to be back home by 600 minutes. My speed is 0.5 distance units per minute and I
+spend 3 minutes at each stop.
+
+The pharmacy is at (2, 1) and is open between 30 and 90.
+The hardware store is at (5, 4) and is open between 15 and 40.
+The post office is at (1, 6) and is open between 0 and 30.
+The bakery is at (4, 2) and is open between 25 and 70.
+```
+
+Point ontime at any OpenAI-compatible endpoint, which is what a server such as
+vLLM or llama.cpp exposes, then run the same command on the text file:
 
 ```
 export ONTIME_LLM_BASE_URL=http://localhost:8000/v1
@@ -137,9 +170,77 @@ export ONTIME_LLM_MODEL=qwen2.5-7b-instruct
 .venv/bin/python route.py examples/driving/day.txt
 ```
 
-The model reads the stops, windows, service times, and speed out of the text and
-calls the solver. The route still passes through the same feasibility gate, so a
-window-breaking answer is refused the same way.
+```
+verified route (natural_language)
+  order: 0 -> 3 -> 2 -> 4 -> 1 -> 0
+  arrivals: [0, 12, 24, 31, 38, 45]
+  completion time: 45
+```
+
+The answer matches the structured run, since the text describes the same problem.
+
+### What the system did to get there
+
+The text request runs through six phases. Here is what each one did on this run,
+with Qwen 2.5 7B reading the file.
+
+1. Guard. The request is checked for scope. It reads as a stops-with-windows
+   problem, so it passes.
+
+   ```
+   in_scope: True | kind: driving
+   ```
+
+2. Modeler. The model reads the prose and calls the solve_tsp_tw tool with the
+   parameters it found. This is the step the benchmark measures, and it is where a
+   weak read shows up.
+
+   ```
+   tool_called: True
+   coordinates:  [[0, 0], [2, 1], [5, 4], [1, 6], [4, 2]]
+   time_windows: [[0, 600], [30, 90], [15, 40], [0, 30], [25, 70]]
+   service_time: 3 | speed: 0.5
+   ```
+
+3. Self-review. A second independent read of the same text checks whether the
+   first read was stable. Here the two reads agree. This step is off by default
+   and is shown here for the walkthrough.
+
+   ```
+   agrees: True
+   ```
+
+4. Solve. OR-Tools solves the extracted problem.
+
+   ```
+   status: optimal | tour: [0, 3, 2, 4, 1, 0] | total_time: 45
+   ```
+
+5. Verify. The feasibility gate recomputes the route against the real windows. A
+   route that fails here is never returned.
+
+   ```
+   correct: True | objective: 45
+   ```
+
+6. Autonomy. With a passing gate, the route is delivered. On a failed gate, it is
+   held back and the unmeetable stop is reported.
+
+   ```
+   deliver: True
+   ```
+
+The modeler is the step that can go wrong. If the prose is vague about a value,
+for example leaving the time to be back home unstated, the model can read it as a
+window of [0, 0] and the problem comes back infeasible. State the value and the
+read is clean. When the open 7B declines to call the tool at all, which the
+benchmark saw on about 7.5% of raw text requests, fall back to the structured file
+or escalate that one request to a stronger model.
+
+These runs were done with Qwen 2.5 7B both locally through Ollama on a laptop and
+on a Modal cloud GPU through vLLM. The endpoint is OpenAI-compatible either way,
+so the command and the result are the same. The cloud GPU is faster, and the
+laptop needs no account.
 
 ### A scheduling problem is the same shape
 
@@ -166,6 +267,7 @@ the autonomy decision sits on.
 | `pipeline/solve_tsp_tw.py` | wrap OR-Tools, accept coordinates with a speed or a direct cost matrix | measured |
 | `pipeline/verifier.py` | check the route against the real windows | measured |
 | `pipeline/autonomy.py` | return the route, or report which stop cannot be made | scaffolding |
+| `pipeline/schedule.py` | render the verified route as a readable plan | scaffolding |
 | `distances/haversine.py` | the free default cost source | scaffolding |
 | `distances/osrm.py` | an optional road-time adapter, never required | scaffolding |
 | `modes/structured.py` | parse CSV or JSON | scaffolding |

@@ -25,7 +25,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from ontime.modes import natural_language, structured
-from ontime.pipeline import autonomy, guard, modeler, self_review, verifier
+from ontime.pipeline import autonomy, guard, modeler, schedule, self_review, verifier
 from ontime.pipeline.solve_tsp_tw import solve
 from ontime.pipeline.spec import ProblemSpec, provider_for
 
@@ -39,6 +39,17 @@ class RouteOutcome:
     reason: str
     mode: str
     refused: bool
+    names: list[str] | None = None
+    time_windows: list[list[int]] | None = None
+
+    def schedule_text(self, unit: str = "min") -> str:
+        """A readable schedule for the requester, or the refusal reason."""
+        if not self.verified:
+            return f"No schedule. {self.reason}"
+        return schedule.render(
+            self.route, self.arrivals,
+            names=self.names, time_windows=self.time_windows, unit=unit,
+        )
 
 
 def plan_route(
@@ -88,6 +99,7 @@ def _plan_structured(
     return _solve_and_gate(
         spec, g, review=None, mode="structured", geo=geo, consequence="normal",
         time_limit_s=time_limit_s, solution_limit=solution_limit,
+        names=parsed.get("names"),
     )
 
 
@@ -136,6 +148,7 @@ def _solve_and_gate(
     consequence: str,
     time_limit_s: int,
     solution_limit: int | None,
+    names: list[str] | None = None,
 ) -> RouteOutcome:
     provider = provider_for(spec, geo=geo)
     result = solve(
@@ -158,10 +171,14 @@ def _solve_and_gate(
     return RouteOutcome(
         result["tour"], result["arrivals"], result["total_time"],
         True, "", mode, refused=False,
+        names=names, time_windows=spec.time_windows,
     )
 
 
-def _print_outcome(outcome: RouteOutcome) -> None:
+def _print_outcome(outcome: RouteOutcome, *, as_schedule: bool = False) -> None:
+    if as_schedule:
+        print(outcome.schedule_text())
+        return
     if outcome.verified:
         print(f"verified route ({outcome.mode})")
         print(f"  order: {' -> '.join(str(s) for s in outcome.route)}")
@@ -186,6 +203,10 @@ def main(argv: list[str] | None = None) -> int:
         "--solution-limit", type=int, default=200,
         help="stop the solver after this many solutions; 0 runs to the time budget",
     )
+    parser.add_argument(
+        "--schedule", action="store_true",
+        help="print a readable schedule instead of the raw route",
+    )
     args = parser.parse_args(argv)
     solution_limit = None if args.solution_limit == 0 else args.solution_limit
 
@@ -209,7 +230,7 @@ def main(argv: list[str] | None = None) -> int:
         time_limit_s=args.time_limit,
         solution_limit=solution_limit,
     )
-    _print_outcome(outcome)
+    _print_outcome(outcome, as_schedule=args.schedule)
     return 0 if outcome.verified else 1
 
 
