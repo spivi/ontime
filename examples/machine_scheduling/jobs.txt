@@ -1,0 +1,24 @@
+I run one machine and I need an order for today's jobs so that each job finishes
+inside its release-to-due window. The machine starts at time zero in its starting
+state, runs one job at a time, and returns to the starting state at the end. Each
+job takes 4 minutes to process, and there is a setup time when switching from one
+job to another.
+
+The setup times, as a matrix where row i column j is the time to switch from i to
+j, with index 0 the starting state:
+
+  [0, 10, 12, 8, 15]
+  [9, 0, 7, 11, 6]
+  [13, 8, 0, 5, 9]
+  [7, 12, 6, 0, 10]
+  [14, 5, 11, 4, 0]
+
+Panel A can start any time and is due by 120.
+Panel B can start any time and is due by 90.
+Panel C is released at 10 and is due by 140.
+Panel D can start any time and is due by 160.
+
+Give me the job order, the time each job finishes, and the time the machine
+returns to its starting state. Treat the setup matrix as the cost matrix, the
+release and due times as the windows, and the processing time as the service
+time.

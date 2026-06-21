@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520">
+  <defs>
+    <linearGradient id="bg03" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F5F1E8"/>
+      <stop offset="100%" stop-color="#EFEAE0"/>
+    </linearGradient>
+    <filter id="sh03">
+      <feDropShadow dx="1" dy="2" stdDeviation="3" flood-color="#C8B89A" flood-opacity="0.22"/>
+    </filter>
+  </defs>
+
+  <rect width="900" height="520" fill="url(#bg03)" rx="4"/>
+
+  <!-- Corner-tick frame -->
+  <line x1="18" y1="18" x2="42" y2="18" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="18" y1="18" x2="18" y2="42" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="882" y1="18" x2="858" y2="18" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="882" y1="18" x2="882" y2="42" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="18" y1="502" x2="42" y2="502" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="18" y1="502" x2="18" y2="478" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="882" y1="502" x2="858" y2="502" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="882" y1="502" x2="882" y2="478" stroke="#2A2823" stroke-width="1.5"/>
+
+  <text x="36" y="38" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="10" fill="#8A7E6A" letter-spacing="1.5">FIG · 03</text>
+
+  <!-- Title -->
+  <text x="450" y="68" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="22" font-weight="700" fill="#2A2823" text-anchor="middle">Marshaling Mechanism (Sonnet)</text>
+  <text x="450" y="91" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="13" fill="#6A6057" text-anchor="middle">Param extraction error type × outcome — all 66 mismatch rows</text>
+
+  <!-- Grouped bar chart: three groups × two bars each -->
+  <!-- Groups: Coordinates-only | Time-windows-only | Combined -->
+  <!-- Bars: inversion (sage) | hard fail (brick) -->
+  <!-- Chart area: left=160, right=780, top=130, bottom=420 -->
+  <!-- Y scale: max 35, so 1 unit = (420-130)/35 = 8.29px -->
+
+  <!-- Y axis -->
+  <line x1="160" y1="130" x2="160" y2="420" stroke="#B0A898" stroke-width="1"/>
+  <line x1="160" y1="420" x2="780" y2="420" stroke="#B0A898" stroke-width="1"/>
+
+  <!-- Y gridlines -->
+  <!-- 0=420, 10=337, 20=254, 30=171 -->
+  <line x1="160" y1="337" x2="780" y2="337" stroke="#D5CFC5" stroke-width="0.8" stroke-dasharray="4,4"/>
+  <line x1="160" y1="254" x2="780" y2="254" stroke="#D5CFC5" stroke-width="0.8" stroke-dasharray="4,4"/>
+  <line x1="160" y1="171" x2="780" y2="171" stroke="#D5CFC5" stroke-width="0.8" stroke-dasharray="4,4"/>
+
+  <text x="154" y="424" font-family="'IBM Plex Mono', monospace" font-size="11" fill="#6A6057" text-anchor="end">0</text>
+  <text x="154" y="341" font-family="'IBM Plex Mono', monospace" font-size="11" fill="#6A6057" text-anchor="end">10</text>
+  <text x="154" y="258" font-family="'IBM Plex Mono', monospace" font-size="11" fill="#6A6057" text-anchor="end">20</text>
+  <text x="154" y="175" font-family="'IBM Plex Mono', monospace" font-size="11" fill="#6A6057" text-anchor="end">30</text>
+  <text x="50" y="285" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="12" fill="#6A6057" text-anchor="middle" transform="rotate(-90, 50, 285)">count of runs</text>
+
+  <!-- Group 1: Coordinates-only (cx=270) -->
+  <!-- 28 inversions: height = 28*8.29 = 232.1, y = 420-232 = 188 -->
+  <!-- 0 hard fails: zero height -->
+  <rect x="232" y="188" width="36" height="232" fill="#7A9070" filter="url(#sh03)" rx="2"/>
+  <rect x="272" y="419" width="36" height="1" fill="#B85450" opacity="0.4" rx="1"/>
+  <text x="250" y="183" font-family="'IBM Plex Mono', monospace" font-size="11" fill="#7A9070" text-anchor="middle">28</text>
+  <text x="290" y="415" font-family="'IBM Plex Mono', monospace" font-size="11" fill="#6A6057" text-anchor="middle">0</text>
+
+  <!-- Group 2: Time-windows-only (cx=470) -->
+  <!-- 25 inversions: height = 25*8.29 = 207.3, y = 420-207 = 213 -->
+  <!-- 8 hard fails: height = 8*8.29 = 66.3, y = 420-66 = 354 -->
+  <rect x="432" y="213" width="36" height="207" fill="#7A9070" filter="url(#sh03)" rx="2"/>
+  <rect x="472" y="354" width="36" height="66" fill="#B85450" filter="url(#sh03)" rx="2"/>
+  <text x="450" y="207" font-family="'IBM Plex Mono', monospace" font-size="11" fill="#7A9070" text-anchor="middle">25</text>
+  <text x="490" y="348" font-family="'IBM Plex Mono', monospace" font-size="11" fill="#B85450" text-anchor="middle">8</text>
+
+  <!-- Group 3: Combined (cx=660) -->
+  <!-- 3 inversions: height = 3*8.29 = 24.9, y = 420-25 = 395 -->
+  <!-- 2 hard fails: height = 2*8.29 = 16.6, y = 420-17 = 403 -->
+  <rect x="622" y="395" width="36" height="25" fill="#7A9070" filter="url(#sh03)" rx="2"/>
+  <rect x="662" y="403" width="36" height="17" fill="#B85450" filter="url(#sh03)" rx="2"/>
+  <text x="640" y="388" font-family="'IBM Plex Mono', monospace" font-size="11" fill="#7A9070" text-anchor="middle">3</text>
+  <text x="680" y="396" font-family="'IBM Plex Mono', monospace" font-size="11" fill="#B85450" text-anchor="middle">2</text>
+
+  <!-- X group labels -->
+  <text x="268" y="442" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="13" fill="#2A2823" text-anchor="middle">Coordinates-only</text>
+  <text x="268" y="457" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="11" font-style="italic" fill="#6A6057" text-anchor="middle">wrong coords, correct TW</text>
+  <text x="468" y="442" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="13" fill="#2A2823" text-anchor="middle">Time-windows-only</text>
+  <text x="468" y="457" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="11" font-style="italic" fill="#6A6057" text-anchor="middle">correct coords, wrong TW</text>
+  <text x="659" y="442" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="13" fill="#2A2823" text-anchor="middle">Combined</text>
+  <text x="659" y="457" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="11" font-style="italic" fill="#6A6057" text-anchor="middle">both wrong</text>
+
+  <!-- Annotation callout -->
+  <rect x="680" y="140" width="178" height="64" fill="#F5F1E8" stroke="#2C5F66" stroke-width="1.2" rx="4"/>
+  <text x="769" y="158" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="11" fill="#2C5F66" text-anchor="middle">Every hard fail involves</text>
+  <text x="769" y="172" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="11" fill="#2C5F66" text-anchor="middle">a time-window error.</text>
+  <text x="769" y="187" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="11" fill="#2C5F66" text-anchor="middle">Coord errors never hard-fail.</text>
+  <!-- Leader line to TW group -->
+  <line x1="680" y1="160" x2="510" y2="354" stroke="#2C5F66" stroke-width="1" stroke-dasharray="3,2" opacity="0.7"/>
+
+  <!-- Legend -->
+  <rect x="160" y="478" width="12" height="12" fill="#7A9070" rx="2"/>
+  <text x="177" y="489" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="12" fill="#2A2823">Inversion (wrong params → route still correct)</text>
+  <rect x="498" y="478" width="12" height="12" fill="#B85450" rx="2"/>
+  <text x="515" y="489" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="12" fill="#2A2823">Hard fail (wrong params → wrong route)</text>
+
+  <!-- Caption -->
+  <text x="450" y="511" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="12" font-style="italic" fill="#4A443C" text-anchor="middle">Coordinate misreads are harmless because the optimum is robust; every hard failure came from a time-window misread, which is a hard constraint.</text>
+</svg>

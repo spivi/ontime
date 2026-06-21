@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="560" viewBox="0 0 900 560">
+  <defs>
+    <linearGradient id="bg02" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F5F1E8"/>
+      <stop offset="100%" stop-color="#EFEAE0"/>
+    </linearGradient>
+    <marker id="arrowR" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#B85450"/>
+    </marker>
+    <marker id="arrowT" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#2C5F66"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="560" fill="url(#bg02)" rx="4"/>
+
+  <!-- Corner-tick frame -->
+  <line x1="18" y1="18" x2="42" y2="18" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="18" y1="18" x2="18" y2="42" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="882" y1="18" x2="858" y2="18" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="882" y1="18" x2="882" y2="42" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="18" y1="542" x2="42" y2="542" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="18" y1="542" x2="18" y2="518" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="882" y1="542" x2="858" y2="542" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="882" y1="542" x2="882" y2="518" stroke="#2A2823" stroke-width="1.5"/>
+
+  <text x="36" y="38" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="10" fill="#8A7E6A" letter-spacing="1.5">FIG · 02</text>
+
+  <!-- Title -->
+  <text x="450" y="68" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="22" font-weight="700" fill="#2A2823" text-anchor="middle">Schema Floored and Walled, Tool Flat-High</text>
+  <text x="450" y="91" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="13" fill="#6A6057" text-anchor="middle">Correctness (%) vs problem size n</text>
+
+  <!-- Chart area: left=130, right=850, top=115, bottom=430 -->
+  <!-- Y: 0% → 430, 100% → 115 -->
+  <!-- X: n=8→220, n=12→380, n=16→540, n=20→720 -->
+
+  <!-- Y axis -->
+  <line x1="130" y1="115" x2="130" y2="430" stroke="#B0A898" stroke-width="1"/>
+  <line x1="130" y1="430" x2="850" y2="430" stroke="#B0A898" stroke-width="1"/>
+
+  <!-- Y gridlines -->
+  <line x1="130" y1="115" x2="850" y2="115" stroke="#D5CFC5" stroke-width="0.8" stroke-dasharray="4,4"/>
+  <line x1="130" y1="194" x2="850" y2="194" stroke="#D5CFC5" stroke-width="0.8" stroke-dasharray="4,4"/>
+  <line x1="130" y1="272" x2="850" y2="272" stroke="#D5CFC5" stroke-width="0.8" stroke-dasharray="4,4"/>
+  <line x1="130" y1="351" x2="850" y2="351" stroke="#D5CFC5" stroke-width="0.8" stroke-dasharray="4,4"/>
+
+  <text x="124" y="119" font-family="'IBM Plex Mono', monospace" font-size="11" fill="#6A6057" text-anchor="end">100</text>
+  <text x="124" y="198" font-family="'IBM Plex Mono', monospace" font-size="11" fill="#6A6057" text-anchor="end">75</text>
+  <text x="124" y="276" font-family="'IBM Plex Mono', monospace" font-size="11" fill="#6A6057" text-anchor="end">50</text>
+  <text x="124" y="355" font-family="'IBM Plex Mono', monospace" font-size="11" fill="#6A6057" text-anchor="end">25</text>
+  <text x="124" y="434" font-family="'IBM Plex Mono', monospace" font-size="11" fill="#6A6057" text-anchor="end">0</text>
+
+  <text x="44" y="280" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="12" fill="#6A6057" text-anchor="middle" transform="rotate(-90, 44, 280)">Correct (%)</text>
+
+  <!-- X labels -->
+  <text x="220" y="450" font-family="'IBM Plex Mono', monospace" font-size="12" fill="#2A2823" text-anchor="middle">8</text>
+  <text x="380" y="450" font-family="'IBM Plex Mono', monospace" font-size="12" fill="#2A2823" text-anchor="middle">12</text>
+  <text x="540" y="450" font-family="'IBM Plex Mono', monospace" font-size="12" fill="#2A2823" text-anchor="middle">16</text>
+  <text x="720" y="450" font-family="'IBM Plex Mono', monospace" font-size="12" fill="#2A2823" text-anchor="middle">20</text>
+  <text x="490" y="468" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="12" fill="#6A6057" text-anchor="middle">n (problem size)</text>
+
+  <!-- Y = 430 - val*3.15 -->
+  <!-- Tool NL line: 100/96.7/90.0/96.7 -->
+  <!-- y values: 430-315=115, 430-304.6=125.4, 430-283.5=146.5, 430-304.6=125.4 -->
+  <!-- Points with confidence interval shading (flat-range appearance) -->
+  <polygon points="220,110 380,118 540,138 720,118 720,135 540,156 380,136 220,126" fill="#7A9070" fill-opacity="0.15"/>
+
+  <!-- Tool NL line -->
+  <polyline points="220,115 380,125 540,147 720,125" stroke="#7A9070" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
+  <!-- Dots -->
+  <circle cx="220" cy="115" r="5" fill="#7A9070"/>
+  <circle cx="380" cy="125" r="5" fill="#7A9070"/>
+  <circle cx="540" cy="147" r="5" fill="#7A9070"/>
+  <circle cx="720" cy="125" r="5" fill="#7A9070"/>
+
+  <!-- Tool NL value labels -->
+  <text x="220" y="108" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#7A9070" text-anchor="middle">100%</text>
+  <text x="375" y="118" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#7A9070" text-anchor="end">96.7%</text>
+  <text x="540" y="140" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#7A9070" text-anchor="middle">90.0%</text>
+  <text x="725" y="118" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#7A9070" text-anchor="start">96.7%</text>
+
+  <!-- Schema line: 3.3% at n=8 → y=430-10.4=419.6; 0.6% at n=12 → y=430-1.9=428.1 -->
+  <!-- Then terminated into walls at n=16 and n=20 -->
+  <!-- Schema data points -->
+  <circle cx="220" cy="420" r="5" fill="#B85450"/>
+  <circle cx="380" cy="428" r="5" fill="#B85450"/>
+  <!-- Line from n=8 to n=12 -->
+  <line x1="220" y1="420" x2="380" y2="428" stroke="#B85450" stroke-width="2.5" stroke-dasharray="6,3"/>
+
+  <!-- Value labels -->
+  <text x="220" y="412" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#B85450" text-anchor="middle">3.3%</text>
+  <text x="380" y="421" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#B85450" text-anchor="middle">0.6%</text>
+
+  <!-- Schema line terminates at n=16 wall: dotted line approaching the wall -->
+  <line x1="380" y1="428" x2="510" y2="430" stroke="#B85450" stroke-width="2" stroke-dasharray="4,3" opacity="0.6"/>
+
+  <!-- MODELING WALL at n=16 -->
+  <rect x="525" y="115" width="30" height="315" fill="#B85450" fill-opacity="0.10" rx="2"/>
+  <line x1="540" y1="115" x2="540" y2="430" stroke="#B85450" stroke-width="2" stroke-dasharray="5,3"/>
+  <text x="555" y="220" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="11" font-style="italic" fill="#B85450" text-anchor="start" transform="rotate(90, 555, 220)">modeling wall</text>
+  <text x="548" y="310" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#B85450" text-anchor="start">0/5 correct</text>
+  <text x="548" y="322" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#B85450" text-anchor="start">64k budget</text>
+
+  <!-- Schema reaches but terminates into the wall — no data point at n=16 -->
+  <!-- Arrow pointing into wall -->
+  <line x1="510" y1="430" x2="528" y2="430" stroke="#B85450" stroke-width="1.5" marker-end="url(#arrowR)" opacity="0.7"/>
+
+  <!-- LENGTH WALL at n=20 -->
+  <rect x="705" y="115" width="30" height="315" fill="#C99A4A" fill-opacity="0.10" rx="2"/>
+  <line x1="720" y1="115" x2="720" y2="430" stroke="#C99A4A" stroke-width="2" stroke-dasharray="5,3"/>
+  <text x="735" y="220" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="11" font-style="italic" fill="#C99A4A" text-anchor="start" transform="rotate(90, 735, 220)">length wall</text>
+  <text x="728" y="302" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#C99A4A" text-anchor="start">output truncates</text>
+  <text x="728" y="314" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#C99A4A" text-anchor="start">62k–64k tokens</text>
+
+  <!-- Serving ceiling line -->
+  <!-- 32,768 token ceiling - shown conceptually as the budget limit line in FIG05 context -->
+  <!-- For FIG02 we show the wall annotations, not the token ceiling -->
+
+  <!-- Legend -->
+  <line x1="148" y1="487" x2="172" y2="487" stroke="#7A9070" stroke-width="2.5"/>
+  <circle cx="160" cy="487" r="4" fill="#7A9070"/>
+  <text x="178" y="491" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="12" fill="#2A2823">Domain tool (NL)</text>
+
+  <line x1="340" y1="487" x2="364" y2="487" stroke="#B85450" stroke-width="2.5" stroke-dasharray="6,3"/>
+  <circle cx="352" cy="487" r="4" fill="#B85450"/>
+  <text x="370" y="491" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="12" fill="#2A2823">Schema interface</text>
+
+  <line x1="550" y1="487" x2="574" y2="487" stroke="#B85450" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="580" y="491" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="12" fill="#B85450">modeling wall (n=16)</text>
+
+  <line x1="740" y1="487" x2="764" y2="487" stroke="#C99A4A" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="770" y="491" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="12" fill="#C99A4A">length wall (n=20)</text>
+
+  <!-- Caption -->
+  <text x="450" y="527" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="12" font-style="italic" fill="#4A443C" text-anchor="middle">Tool correctness stays flat and high across sizes while schema sits near zero and then hits a wall.</text>
+</svg>

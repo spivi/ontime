@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="540" viewBox="0 0 900 540">
+  <defs>
+    <linearGradient id="bg01" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F5F1E8"/>
+      <stop offset="100%" stop-color="#EFEAE0"/>
+    </linearGradient>
+    <filter id="shadow01">
+      <feDropShadow dx="1" dy="2" stdDeviation="3" flood-color="#C8B89A" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="540" fill="url(#bg01)" rx="4"/>
+
+  <!-- Corner-tick frame -->
+  <line x1="18" y1="18" x2="42" y2="18" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="18" y1="18" x2="18" y2="42" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="882" y1="18" x2="858" y2="18" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="882" y1="18" x2="882" y2="42" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="18" y1="522" x2="42" y2="522" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="18" y1="522" x2="18" y2="498" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="882" y1="522" x2="858" y2="522" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="882" y1="522" x2="882" y2="498" stroke="#2A2823" stroke-width="1.5"/>
+
+  <!-- Figure label -->
+  <text x="36" y="38" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="10" fill="#8A7E6A" letter-spacing="1.5">FIG · 01</text>
+
+  <!-- Title -->
+  <text x="450" y="68" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="22" font-weight="700" fill="#2A2823" text-anchor="middle">The Interface Jump</text>
+  <text x="450" y="92" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="13" fill="#6A6057" text-anchor="middle">Correctness over all runs — schema interface vs domain tool</text>
+
+  <!-- Axis setup: left margin 120, right 860, top 120, bottom 460 -->
+  <!-- Y axis: 0% to 100% -->
+  <!-- X groups: n=8, n=12, n=16, n=20 -->
+
+  <!-- Y axis label -->
+  <text x="44" y="295" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="12" fill="#6A6057" text-anchor="middle" transform="rotate(-90, 44, 295)">Correct (%)</text>
+
+  <!-- Y gridlines and labels -->
+  <!-- 0% = y=460, 100% = y=120 -->
+  <line x1="118" y1="120" x2="860" y2="120" stroke="#D5CFC5" stroke-width="0.8" stroke-dasharray="4,4"/>
+  <line x1="118" y1="204" x2="860" y2="204" stroke="#D5CFC5" stroke-width="0.8" stroke-dasharray="4,4"/>
+  <line x1="118" y1="288" x2="860" y2="288" stroke="#D5CFC5" stroke-width="0.8" stroke-dasharray="4,4"/>
+  <line x1="118" y1="372" x2="860" y2="372" stroke="#D5CFC5" stroke-width="0.8" stroke-dasharray="4,4"/>
+  <line x1="118" y1="460" x2="860" y2="460" stroke="#B0A898" stroke-width="1"/>
+
+  <text x="112" y="124" font-family="'IBM Plex Mono', monospace" font-size="11" fill="#6A6057" text-anchor="end">100</text>
+  <text x="112" y="208" font-family="'IBM Plex Mono', monospace" font-size="11" fill="#6A6057" text-anchor="end">75</text>
+  <text x="112" y="292" font-family="'IBM Plex Mono', monospace" font-size="11" fill="#6A6057" text-anchor="end">50</text>
+  <text x="112" y="376" font-family="'IBM Plex Mono', monospace" font-size="11" fill="#6A6057" text-anchor="end">25</text>
+  <text x="112" y="464" font-family="'IBM Plex Mono', monospace" font-size="11" fill="#6A6057" text-anchor="end">0</text>
+
+  <!-- X axis -->
+  <line x1="118" y1="120" x2="118" y2="460" stroke="#B0A898" stroke-width="1"/>
+
+  <!-- Group positions: n=8 cx=210, n=12 cx=395, n=16 cx=580, n=20 cx=765 -->
+  <!-- Bar width: 52px per bar, gap 18px between pairs, 86px between groups -->
+  <!-- Schema bar: cx - 29, Tool bar: cx + 29 -->
+
+  <!-- n=8 group: cx=210 -->
+  <!-- Schema 3.3% → y = 460 - 3.3*3.4 = 460 - 11.2 = 448.8 -->
+  <!-- Tool 100% → y = 120 -->
+  <rect x="181" y="448" width="24" height="12" fill="#B85450" filter="url(#shadow01)" rx="2"/>
+  <rect x="209" y="120" width="24" height="340" fill="#7A9070" filter="url(#shadow01)" rx="2"/>
+  <text x="193" y="443" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#B85450" text-anchor="middle">3.3%</text>
+  <text x="221" y="115" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#7A9070" text-anchor="middle">100%</text>
+
+  <!-- n=12 group: cx=368 -->
+  <!-- Schema 0.6% → height = 0.6*3.4 = 2.0 → y = 457.9 -->
+  <!-- Tool 96.7% → height = 96.7*3.4 = 328.8 → y = 131.2 -->
+  <rect x="339" y="458" width="24" height="2" fill="#B85450" filter="url(#shadow01)" rx="1"/>
+  <rect x="367" y="131" width="24" height="329" fill="#7A9070" filter="url(#shadow01)" rx="2"/>
+  <text x="351" y="453" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#B85450" text-anchor="middle">0.6%</text>
+  <text x="379" y="126" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#7A9070" text-anchor="middle">96.7%</text>
+
+  <!-- n=16 group: cx=526 -->
+  <!-- Schema 0% → height = 0, just a thin line at 460 -->
+  <!-- Tool 90.0% → height = 90*3.4 = 306 → y = 154 -->
+  <rect x="497" y="459" width="24" height="1" fill="#B85450" opacity="0.5" rx="1"/>
+  <rect x="525" y="154" width="24" height="306" fill="#7A9070" filter="url(#shadow01)" rx="2"/>
+  <text x="509" y="453" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#B85450" text-anchor="middle">0.0%</text>
+  <text x="537" y="149" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#7A9070" text-anchor="middle">90.0%</text>
+
+  <!-- n=20 group: cx=684 -->
+  <!-- Schema 0% -->
+  <!-- Tool 96.7% → height = 328.8 → y = 131.2 -->
+  <rect x="655" y="459" width="24" height="1" fill="#B85450" opacity="0.5" rx="1"/>
+  <rect x="683" y="131" width="24" height="329" fill="#7A9070" filter="url(#shadow01)" rx="2"/>
+  <text x="667" y="453" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#B85450" text-anchor="middle">0.0%</text>
+  <text x="695" y="126" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#7A9070" text-anchor="middle">96.7%</text>
+
+  <!-- X axis labels -->
+  <text x="210" y="480" font-family="'IBM Plex Mono', monospace" font-size="12" fill="#2A2823" text-anchor="middle">n = 8</text>
+  <text x="375" y="480" font-family="'IBM Plex Mono', monospace" font-size="12" fill="#2A2823" text-anchor="middle">n = 12</text>
+  <text x="537" y="480" font-family="'IBM Plex Mono', monospace" font-size="12" fill="#2A2823" text-anchor="middle">n = 16</text>
+  <text x="679" y="480" font-family="'IBM Plex Mono', monospace" font-size="12" fill="#2A2823" text-anchor="middle">n = 20</text>
+
+  <!-- Legend -->
+  <rect x="550" y="138" width="12" height="12" fill="#B85450" rx="2"/>
+  <text x="567" y="149" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="12" fill="#2A2823">Schema interface</text>
+  <rect x="550" y="158" width="12" height="12" fill="#7A9070" rx="2"/>
+  <text x="567" y="169" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="12" fill="#2A2823">Domain tool</text>
+
+  <!-- Caption -->
+  <text x="450" y="508" font-family="'Source Serif Pro', 'IBM Plex Serif', Georgia, serif" font-size="12" font-style="italic" fill="#4A443C" text-anchor="middle">The same model on the same instances solved ≈1% under a schema interface and ≈95% behind a domain tool.</text>
+</svg>

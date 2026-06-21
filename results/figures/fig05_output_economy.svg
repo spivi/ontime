@@ -1,0 +1,195 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="580" viewBox="0 0 900 580">
+  <defs>
+    <linearGradient id="bg05" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F5F1E8"/>
+      <stop offset="100%" stop-color="#EFEAE0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="900" height="580" fill="url(#bg05)" rx="4"/>
+
+  <!-- Corner-tick frame -->
+  <line x1="18" y1="18" x2="42" y2="18" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="18" y1="18" x2="18" y2="42" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="882" y1="18" x2="858" y2="18" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="882" y1="18" x2="882" y2="42" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="18" y1="562" x2="42" y2="562" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="18" y1="562" x2="18" y2="538" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="882" y1="562" x2="858" y2="562" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="882" y1="562" x2="882" y2="538" stroke="#2A2823" stroke-width="1.5"/>
+
+  <text x="36" y="38" font-family="'IBM Plex Mono','JetBrains Mono',monospace" font-size="10" fill="#8A7E6A" letter-spacing="1.5">FIG · 05</text>
+
+  <!-- Title -->
+  <text x="450" y="67" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="22" font-weight="700" fill="#2A2823" text-anchor="middle">Output Economy</text>
+  <text x="450" y="89" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="13" fill="#6A6057" text-anchor="middle">Output tokens vs n — log scale — tool NL vs schema</text>
+
+  <!--
+    Chart area: x left=155, right=760, top=115, bottom=460
+    Log₁₀ scale: tokens range 500–80000
+    y = 460 − (log10(t) − log10(500)) / (log10(80000) − log10(500)) × 345
+    log10(500)=2.699   log10(80000)=4.903   span=2.204
+    scale factor: 345/2.204 = 156.5 px per decade
+
+    Key y positions:
+      500    → log10=2.699 → y=460
+      1000   → log10=3.000 → (3.000-2.699)*156.5 = 47.1 → y=412.9 ≈ 413
+      2000   → 3.301 → (3.301-2.699)*156.5 = 94.2 → y=365.8 ≈ 366
+      5000   → 3.699 → (3.699-2.699)*156.5 = 156.5 → y=303.5 ≈ 304
+      10000  → 4.000 → (4.000-2.699)*156.5 = 203.6 → y=256.4 ≈ 256
+      20000  → 4.301 → (4.301-2.699)*156.5 = 250.7 → y=209.3 ≈ 209
+      32768  → 4.515 → (4.515-2.699)*156.5 = 284.2 → y=175.8 ≈ 176
+      50000  → 4.699 → (4.699-2.699)*156.5 = 313.0 → y=147
+      64000  → 4.806 → (4.806-2.699)*156.5 = 329.7 → y=130.3 ≈ 130
+      80000  → 4.903 → (4.903-2.699)*156.5 = 345   → y=115
+
+    Data points (tool NL means):
+      n=8:  695  → log10=2.842 → (2.842-2.699)*156.5=22.4 → y=437.6 ≈ 438
+      n=12: 943  → log10=2.975 → (2.975-2.699)*156.5=43.2 → y=416.8 ≈ 417
+      n=16: 1048 → log10=3.020 → (3.020-2.699)*156.5=50.2 → y=409.8 ≈ 410
+      n=20: 1163 → log10=3.066 → (3.066-2.699)*156.5=57.4 → y=402.6 ≈ 403
+
+    Schema means (run-mean including zeros):
+      n=8:  1216 → log10=3.085 → (3.085-2.699)*156.5=60.4 → y=399.6 ≈ 400
+      n=12: 7289 → log10=3.863 → (3.863-2.699)*156.5=182.2 → y=277.8 ≈ 278
+
+    Schema diagnostic (per-attempt, shown as range bars):
+      n=16: 27679–51667  → y=209 (27k) to y=147 (52k), mid ≈ y=178
+      n=20: 61619–64000  → y=132 (62k) to y=130 (64k), treat as flat at y=131
+
+    X positions: n=8=245, n=12=385, n=16=525, n=20=665
+  -->
+
+  <!-- Y axis line -->
+  <line x1="155" y1="115" x2="155" y2="460" stroke="#B0A898" stroke-width="1.2"/>
+  <!-- X axis line -->
+  <line x1="155" y1="460" x2="760" y2="460" stroke="#B0A898" stroke-width="1.2"/>
+
+  <!-- Y gridlines at each labelled decade/half-decade -->
+  <!-- 1k  y=413 -->
+  <line x1="155" y1="413" x2="760" y2="413" stroke="#D5CFC5" stroke-width="0.8" stroke-dasharray="4,4"/>
+  <!-- 10k y=256 -->
+  <line x1="155" y1="256" x2="760" y2="256" stroke="#D5CFC5" stroke-width="0.8" stroke-dasharray="4,4"/>
+  <!-- 32k y=176 (serving ceiling — special) -->
+  <line x1="155" y1="176" x2="760" y2="176" stroke="#B85450" stroke-width="1.8" stroke-dasharray="8,5"/>
+  <!-- 64k y=130 -->
+  <line x1="155" y1="130" x2="760" y2="130" stroke="#D5CFC5" stroke-width="0.8" stroke-dasharray="4,4"/>
+
+  <!-- Serving ceiling shaded zone above line -->
+  <rect x="155" y="115" width="605" height="61" fill="#B85450" fill-opacity="0.05"/>
+
+  <!-- Y axis tick labels -->
+  <text x="148" y="464" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#6A6057" text-anchor="end">500</text>
+  <text x="148" y="417" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#6A6057" text-anchor="end">1k</text>
+  <text x="148" y="260" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#6A6057" text-anchor="end">10k</text>
+  <text x="148" y="180" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#B85450" text-anchor="end">32k</text>
+  <text x="148" y="134" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#6A6057" text-anchor="end">64k</text>
+
+  <!-- Serving ceiling label (right of chart) -->
+  <text x="766" y="174" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#B85450" text-anchor="start">serving</text>
+  <text x="766" y="186" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#B85450" text-anchor="start">ceiling</text>
+  <text x="766" y="198" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#B85450" text-anchor="start">32,768</text>
+
+  <!-- Y axis label -->
+  <text x="42" y="295" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="12" fill="#6A6057" text-anchor="middle" transform="rotate(-90,42,295)">Output tokens (log scale)</text>
+
+  <!-- X axis labels -->
+  <text x="245" y="478" font-family="'IBM Plex Mono',monospace" font-size="12" fill="#2A2823" text-anchor="middle">n = 8</text>
+  <text x="385" y="478" font-family="'IBM Plex Mono',monospace" font-size="12" fill="#2A2823" text-anchor="middle">n = 12</text>
+  <text x="525" y="478" font-family="'IBM Plex Mono',monospace" font-size="12" fill="#2A2823" text-anchor="middle">n = 16</text>
+  <text x="665" y="478" font-family="'IBM Plex Mono',monospace" font-size="12" fill="#2A2823" text-anchor="middle">n = 20</text>
+
+  <!-- ── TOOL NL LINE (sage green) ───────────────────────────────── -->
+  <!-- Points: (245,438) (385,417) (525,410) (665,403) — very flat -->
+  <!-- Confidence band (thin) -->
+  <polygon points="245,435 385,414 525,407 665,400  665,407 525,414 385,421 245,441"
+           fill="#7A9070" fill-opacity="0.20"/>
+  <!-- Line -->
+  <polyline points="245,438 385,417 525,410 665,403"
+            stroke="#7A9070" stroke-width="2.8" fill="none" stroke-linejoin="round"/>
+  <!-- Dots -->
+  <circle cx="245" cy="438" r="5" fill="#7A9070" stroke="#F5F1E8" stroke-width="1.5"/>
+  <circle cx="385" cy="417" r="5" fill="#7A9070" stroke="#F5F1E8" stroke-width="1.5"/>
+  <circle cx="525" cy="410" r="5" fill="#7A9070" stroke="#F5F1E8" stroke-width="1.5"/>
+  <circle cx="665" cy="403" r="5" fill="#7A9070" stroke="#F5F1E8" stroke-width="1.5"/>
+
+  <!-- Tool value labels — above dots, clear of schema -->
+  <text x="245" y="430" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#7A9070" text-anchor="middle">695</text>
+  <text x="385" y="409" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#7A9070" text-anchor="middle">943</text>
+  <text x="525" y="402" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#7A9070" text-anchor="middle">1,048</text>
+  <text x="665" y="395" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#7A9070" text-anchor="middle">1,163</text>
+
+  <!-- "TOOL" label at right end of tool line -->
+  <text x="682" y="406" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#7A9070" text-anchor="start">tool</text>
+
+  <!-- ── SCHEMA LINE (brick red) ─────────────────────────────────── -->
+  <!-- n=8 mean 1216 → y=400 -->
+  <!-- n=12 mean 7289 → y=278 -->
+  <!-- Then dashed into n=16 range bar, then into n=20 range bar -->
+
+  <!-- Solid segment n=8 to n=12 -->
+  <polyline points="245,400 385,278"
+            stroke="#B85450" stroke-width="2.8" fill="none" stroke-linejoin="round"/>
+  <!-- Dots for n=8 and n=12 schema -->
+  <circle cx="245" cy="400" r="5" fill="#B85450" stroke="#F5F1E8" stroke-width="1.5"/>
+  <circle cx="385" cy="278" r="5" fill="#B85450" stroke="#F5F1E8" stroke-width="1.5"/>
+
+  <!-- Schema value labels — offset left so they don't collide with tool labels -->
+  <text x="222" y="400" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#B85450" text-anchor="end">1,216</text>
+  <text x="362" y="274" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#B85450" text-anchor="end">7,289</text>
+
+  <!-- Dashed line from n=12 toward n=16 range -->
+  <!-- n=16 range mid ≈ y=178, draw to x=515 (just left of range bar) -->
+  <line x1="385" y1="278" x2="515" y2="178"
+        stroke="#B85450" stroke-width="2" stroke-dasharray="6,4"/>
+
+  <!-- n=16 range bar: 27679(y=209) – 51667(y=147), center x=525 -->
+  <line x1="525" y1="147" x2="525" y2="209" stroke="#B85450" stroke-width="2.5"/>
+  <line x1="518" y1="147" x2="532" y2="147" stroke="#B85450" stroke-width="1.8"/>
+  <line x1="518" y1="209" x2="532" y2="209" stroke="#B85450" stroke-width="1.8"/>
+
+  <!-- n=16 range labels (right of bar) -->
+  <text x="537" y="151" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#B85450" text-anchor="start">52k</text>
+  <text x="537" y="213" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#B85450" text-anchor="start">28k</text>
+  <text x="537" y="182" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="10" font-style="italic" fill="#B85450" text-anchor="start">diag. range</text>
+
+  <!-- Dashed line from n=16 mid to n=20 range -->
+  <line x1="535" y1="178" x2="655" y2="131"
+        stroke="#B85450" stroke-width="2" stroke-dasharray="6,4"/>
+
+  <!-- n=20 range bar: 61619(y=132) – 64000(y=130), nearly flat, center x=665 -->
+  <!-- range is tight: just show as a point with "truncated" annotation -->
+  <line x1="665" y1="130" x2="665" y2="133" stroke="#B85450" stroke-width="2.5"/>
+  <circle cx="665" cy="131" r="5" fill="#B85450" stroke="#F5F1E8" stroke-width="1.5"/>
+
+  <!-- n=20 schema annotations (above chart area, arrows up) -->
+  <!-- Label above dot -->
+  <text x="665" y="122" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#B85450" text-anchor="middle">62–64k</text>
+  <text x="665" y="142" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="10" font-style="italic" fill="#B85450" text-anchor="middle">truncated</text>
+
+  <!-- "SCHEMA" label at right end -->
+  <text x="682" y="131" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#B85450" text-anchor="start">schema</text>
+
+  <!-- Modeling wall at n=16 -->
+  <line x1="525" y1="115" x2="525" y2="460" stroke="#B85450" stroke-width="1.2" stroke-dasharray="4,3" opacity="0.55"/>
+  <text x="529" y="465" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="10" font-style="italic" fill="#B85450" text-anchor="middle" transform="rotate(-90,529,430)">modeling wall</text>
+
+  <!-- Length wall at n=20 -->
+  <line x1="665" y1="115" x2="665" y2="460" stroke="#C99A4A" stroke-width="1.2" stroke-dasharray="4,3" opacity="0.55"/>
+  <text x="669" y="465" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="10" font-style="italic" fill="#C99A4A" text-anchor="middle" transform="rotate(-90,669,430)">length wall</text>
+
+  <!-- ── LEGEND ────────────────────────────────────────────────────── -->
+  <line x1="160" y1="502" x2="188" y2="502" stroke="#7A9070" stroke-width="2.8"/>
+  <circle cx="174" cy="502" r="4" fill="#7A9070" stroke="#F5F1E8" stroke-width="1.5"/>
+  <text x="194" y="506" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="12" fill="#2A2823">Domain tool — NL (Sonnet, run mean)</text>
+
+  <line x1="480" y1="502" x2="508" y2="502" stroke="#B85450" stroke-width="2.8"/>
+  <circle cx="494" cy="502" r="4" fill="#B85450" stroke="#F5F1E8" stroke-width="1.5"/>
+  <text x="514" y="506" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="12" fill="#2A2823">Schema (run mean; n=16/20 diagnostic range)</text>
+
+  <line x1="340" y1="522" x2="368" y2="522" stroke="#B85450" stroke-width="1.5" stroke-dasharray="8,4"/>
+  <text x="374" y="526" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="12" fill="#B85450">serving ceiling 32,768</text>
+
+  <!-- Caption -->
+  <text x="450" y="552" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="12" font-style="italic" fill="#4A443C" text-anchor="middle">Tool output stays flat near a thousand tokens while schema output grows past the serving ceiling.</text>
+</svg>

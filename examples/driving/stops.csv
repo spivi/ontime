@@ -1,0 +1,6 @@
+name,x,y,open,close,service,speed
+home,0,0,0,600,0,0.5
+pharmacy,2,1,30,90,3,0.5
+hardware store,5,4,15,40,3,0.5
+post office,1,6,0,30,3,0.5
+bakery,4,2,25,70,3,0.5

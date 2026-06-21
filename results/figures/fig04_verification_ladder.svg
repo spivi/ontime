@@ -1,0 +1,176 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600" viewBox="0 0 900 600">
+  <defs>
+    <linearGradient id="bg04" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F5F1E8"/>
+      <stop offset="100%" stop-color="#EFEAE0"/>
+    </linearGradient>
+    <filter id="sh04">
+      <feDropShadow dx="1" dy="2" stdDeviation="3" flood-color="#C8B89A" flood-opacity="0.22"/>
+    </filter>
+    <!-- Clip regions per column so text cannot bleed -->
+    <clipPath id="col-rung">   <rect x="44"  y="110" width="114" height="300"/> </clipPath>
+    <clipPath id="col-side">   <rect x="162" y="110" width="152" height="300"/> </clipPath>
+    <clipPath id="col-catch">  <rect x="318" y="110" width="180" height="300"/> </clipPath>
+    <clipPath id="col-cost">   <rect x="502" y="110" width="176" height="300"/> </clipPath>
+    <clipPath id="col-assess"> <rect x="682" y="110" width="176" height="300"/> </clipPath>
+  </defs>
+
+  <rect width="900" height="600" fill="url(#bg04)" rx="4"/>
+
+  <!-- Corner-tick frame -->
+  <line x1="18" y1="18" x2="42" y2="18" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="18" y1="18" x2="18" y2="42" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="882" y1="18" x2="858" y2="18" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="882" y1="18" x2="882" y2="42" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="18" y1="582" x2="42" y2="582" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="18" y1="582" x2="18" y2="558" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="882" y1="582" x2="858" y2="582" stroke="#2A2823" stroke-width="1.5"/>
+  <line x1="882" y1="582" x2="882" y2="558" stroke="#2A2823" stroke-width="1.5"/>
+
+  <text x="36" y="38" font-family="'IBM Plex Mono','JetBrains Mono',monospace" font-size="10" fill="#8A7E6A" letter-spacing="1.5">FIG · 04</text>
+
+  <!-- Title -->
+  <text x="450" y="67" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="22" font-weight="700" fill="#2A2823" text-anchor="middle">The Two-Sided Ladder, Priced</text>
+  <text x="450" y="89" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="13" fill="#6A6057" text-anchor="middle">Catch rate by failure mode — production cost — false-alarm tax</text>
+
+  <!-- ── Column layout ──────────────────────────────────────────────────
+       Dividers at x = 160, 316, 500, 680, 858
+       Col centres:  Rung=101  Side=238  Catch=408  Cost=590  Assess=770
+       Col widths:   116       156       184         180        178
+  ──────────────────────────────────────────────────────────────────── -->
+
+  <!-- Column header row -->
+  <rect x="40" y="100" width="820" height="26" fill="#2A2823" fill-opacity="0.06"/>
+  <text x="101" y="117" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="12" font-weight="700" fill="#2A2823" text-anchor="middle">Rung</text>
+  <text x="238" y="117" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="12" font-weight="700" fill="#2A2823" text-anchor="middle">Side</text>
+  <text x="408" y="117" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="12" font-weight="700" fill="#2A2823" text-anchor="middle">Catch Rate</text>
+  <text x="590" y="117" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="12" font-weight="700" fill="#2A2823" text-anchor="middle">Cost</text>
+  <text x="770" y="117" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="12" font-weight="700" fill="#2A2823" text-anchor="middle">Assessment</text>
+
+  <!-- Header bottom divider -->
+  <line x1="40" y1="126" x2="860" y2="126" stroke="#B0A898" stroke-width="1.2"/>
+
+  <!-- ════════════════════ ROW 1 : O2 ════════════════════ -->
+  <!-- Row spans y 127–257 (130 px) -->
+  <rect x="40"  y="127" width="820" height="130" fill="#7A9070" fill-opacity="0.08" rx="3"/>
+  <!-- green left accent bar -->
+  <rect x="40"  y="127" width="4"   height="130" fill="#7A9070" rx="2"/>
+
+  <!-- RUNG col (cx=101) -->
+  <g clip-path="url(#col-rung)">
+    <text x="101" y="152" font-family="'IBM Plex Mono',monospace" font-size="15" font-weight="700" fill="#2A2823" text-anchor="middle">O2</text>
+    <text x="101" y="170" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#6A6057" text-anchor="middle">output-side</text>
+    <text x="101" y="185" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#6A6057" text-anchor="middle">feasibility</text>
+    <text x="101" y="200" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#6A6057" text-anchor="middle">check</text>
+  </g>
+
+  <!-- SIDE col (cx=238) -->
+  <g clip-path="url(#col-side)">
+    <text x="238" y="152" font-family="'IBM Plex Mono',monospace" font-size="13" font-weight="700" fill="#2C5F66" text-anchor="middle">Output</text>
+    <text x="238" y="170" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" fill="#6A6057" text-anchor="middle">validate route</text>
+    <text x="238" y="185" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" fill="#6A6057" text-anchor="middle">after receiving it</text>
+  </g>
+
+  <!-- CATCH RATE col (cx=408) -->
+  <g clip-path="url(#col-catch)">
+    <text x="408" y="150" font-family="'IBM Plex Mono',monospace" font-size="21" font-weight="700" fill="#7A9070" text-anchor="middle">10 / 10</text>
+    <text x="408" y="167" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" fill="#6A6057" text-anchor="middle">Sonnet hard fails</text>
+    <text x="408" y="183" font-family="'IBM Plex Mono',monospace" font-size="15" fill="#7A9070" text-anchor="middle">1 / 1</text>
+    <text x="408" y="198" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" fill="#6A6057" text-anchor="middle">Qwen hard fail</text>
+    <text x="408" y="214" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" fill="#7A9070" text-anchor="middle">0 slip-through</text>
+    <text x="408" y="230" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="10" font-style="italic" fill="#6A6057" text-anchor="middle">(no feasible-but-wrong)</text>
+  </g>
+
+  <!-- COST col (cx=590) -->
+  <g clip-path="url(#col-cost)">
+    <text x="590" y="152" font-family="'IBM Plex Mono',monospace" font-size="15" font-weight="700" fill="#7A9070" text-anchor="middle">CPU only</text>
+    <text x="590" y="170" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" fill="#6A6057" text-anchor="middle">zero LLM cost</text>
+    <text x="590" y="186" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" fill="#6A6057" text-anchor="middle">fires only on</text>
+    <text x="590" y="201" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" fill="#6A6057" text-anchor="middle">real failures</text>
+    <text x="590" y="218" font-family="'IBM Plex Mono',monospace" font-size="11" fill="#7A9070" text-anchor="middle">0 false alarms</text>
+  </g>
+
+  <!-- ASSESSMENT col (cx=770) -->
+  <g clip-path="url(#col-assess)">
+    <rect x="697" y="140" width="146" height="38" fill="#7A9070" rx="4"/>
+    <text x="770" y="155" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="13" font-weight="700" fill="#F5F1E8" text-anchor="middle">FREE RUNG</text>
+    <text x="770" y="171" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" fill="#F5F1E8" text-anchor="middle">sufficient here</text>
+    <text x="770" y="192" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#7A9070" text-anchor="middle">catches all hard fails</text>
+    <text x="770" y="207" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#7A9070" text-anchor="middle">at zero added cost</text>
+  </g>
+
+  <!-- Row divider -->
+  <line x1="40" y1="257" x2="860" y2="257" stroke="#D5CFC5" stroke-width="1"/>
+
+  <!-- ════════════════════ ROW 2 : I1 ════════════════════ -->
+  <!-- Row spans y 258–398 (140 px) -->
+  <!-- amber left accent bar -->
+  <rect x="40" y="258" width="4" height="140" fill="#C99A4A" rx="2"/>
+
+  <!-- RUNG col -->
+  <g clip-path="url(#col-rung)">
+    <text x="101" y="283" font-family="'IBM Plex Mono',monospace" font-size="15" font-weight="700" fill="#2A2823" text-anchor="middle">I1</text>
+    <text x="101" y="301" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#6A6057" text-anchor="middle">input-side</text>
+    <text x="101" y="316" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#6A6057" text-anchor="middle">second-pass</text>
+    <text x="101" y="331" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#6A6057" text-anchor="middle">param re-check</text>
+  </g>
+
+  <!-- SIDE col -->
+  <g clip-path="url(#col-side)">
+    <text x="238" y="283" font-family="'IBM Plex Mono',monospace" font-size="13" font-weight="700" fill="#C99A4A" text-anchor="middle">Input</text>
+    <text x="238" y="301" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" fill="#6A6057" text-anchor="middle">re-parse params</text>
+    <text x="238" y="316" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" fill="#6A6057" text-anchor="middle">before tool call</text>
+  </g>
+
+  <!-- CATCH RATE col -->
+  <g clip-path="url(#col-catch)">
+    <text x="408" y="281" font-family="'IBM Plex Mono',monospace" font-size="21" font-weight="700" fill="#7A9070" text-anchor="middle">10 / 10</text>
+    <text x="408" y="298" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" fill="#6A6057" text-anchor="middle">Sonnet hard fails</text>
+    <text x="408" y="316" font-family="'IBM Plex Mono',monospace" font-size="12" fill="#C99A4A" text-anchor="middle">recall: 100%</text>
+    <text x="408" y="334" font-family="'IBM Plex Mono',monospace" font-size="11" fill="#B85450" text-anchor="middle">fires: 83 / 240</text>
+    <text x="408" y="350" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" fill="#B85450" text-anchor="middle">6 · 27 · 25 · 25</text>
+    <text x="408" y="365" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="10" font-style="italic" fill="#6A6057" text-anchor="middle">per n=8/12/16/20</text>
+    <text x="408" y="381" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="10" font-style="italic" fill="#6A6057" text-anchor="middle">many are inversions</text>
+  </g>
+
+  <!-- COST col -->
+  <g clip-path="url(#col-cost)">
+    <text x="590" y="281" font-family="'IBM Plex Mono',monospace" font-size="14" fill="#C99A4A" text-anchor="middle">LLM re-call</text>
+    <text x="590" y="299" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" fill="#6A6057" text-anchor="middle">one extra call</text>
+    <text x="590" y="314" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" fill="#6A6057" text-anchor="middle">per flagged run</text>
+    <text x="590" y="334" font-family="'IBM Plex Mono',monospace" font-size="13" fill="#B85450" text-anchor="middle">~35% fire rate</text>
+    <text x="590" y="352" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" fill="#B85450" text-anchor="middle">heavy false-alarm</text>
+    <text x="590" y="367" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" fill="#B85450" text-anchor="middle">tax, low precision</text>
+  </g>
+
+  <!-- ASSESSMENT col -->
+  <g clip-path="url(#col-assess)">
+    <rect x="697" y="271" width="146" height="38" fill="#C99A4A" fill-opacity="0.18" stroke="#C99A4A" stroke-width="1.2" rx="4"/>
+    <text x="770" y="286" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="12" font-weight="700" fill="#2A2823" text-anchor="middle">REDUNDANT</text>
+    <text x="770" y="301" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" fill="#2A2823" text-anchor="middle">for route failures</text>
+    <text x="770" y="321" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#6A6057" text-anchor="middle">early warning only</text>
+    <text x="770" y="336" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#6A6057" text-anchor="middle">justified if hard-fail</text>
+    <text x="770" y="351" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#6A6057" text-anchor="middle">cost exceeds tax</text>
+  </g>
+
+  <!-- Bottom row divider -->
+  <line x1="40" y1="398" x2="860" y2="398" stroke="#D5CFC5" stroke-width="1"/>
+
+  <!-- Column dividers (full table height) -->
+  <line x1="160" y1="126" x2="160" y2="398" stroke="#D5CFC5" stroke-width="0.9"/>
+  <line x1="316" y1="126" x2="316" y2="398" stroke="#D5CFC5" stroke-width="0.9"/>
+  <line x1="500" y1="126" x2="500" y2="398" stroke="#D5CFC5" stroke-width="0.9"/>
+  <line x1="680" y1="126" x2="680" y2="398" stroke="#D5CFC5" stroke-width="0.9"/>
+
+  <!-- Key insight callout -->
+  <rect x="140" y="410" width="620" height="46" fill="#2C5F66" fill-opacity="0.09" stroke="#2C5F66" stroke-width="1.2" rx="4"/>
+  <text x="450" y="428" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="13" font-weight="700" fill="#2C5F66" text-anchor="middle">O2 is sufficient: the free output-side check caught every hard failure.</text>
+  <text x="450" y="447" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="12" fill="#2C5F66" text-anchor="middle">I1 fires on 35% of runs — heavy tax for redundant hard-fail recall.</text>
+
+  <!-- Caption -->
+  <text x="450" y="484" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="12" font-style="italic" fill="#4A443C" text-anchor="middle">A free output-side feasibility check caught every hard failure; the expensive input-side check buys</text>
+  <text x="450" y="500" font-family="'Source Serif Pro','IBM Plex Serif',Georgia,serif" font-size="12" font-style="italic" fill="#4A443C" text-anchor="middle">only early warning at a heavy false-alarm tax.</text>
+
+  <!-- Footer note -->
+  <text x="450" y="524" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#8A7E6A" text-anchor="middle">Sonnet tool NL: 240 runs · 10 hard fails · O2 recall 10/10 · I1 recall 10/10 · I1 precision 10/83</text>
+</svg>

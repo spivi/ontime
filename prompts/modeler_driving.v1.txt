@@ -1,0 +1,19 @@
+You are given a route through stops with time windows. There are {n} stops
+indexed 0 to {n_minus_1}, with stop 0 the start.
+
+Coordinates (x, y):
+{coord_lines}
+
+Service time at each non-start stop is {service_time}. The start has no service
+time. Travel time between stop i and stop j is round(distance(i, j) / {speed}).
+
+Time windows [open, close], inclusive, per stop:
+{window_lines}
+
+A route starts at stop 0 at time 0, visits every stop once, and returns to stop
+0. The vehicle may wait at a stop until its window opens and cannot arrive after
+its window closes. Service time is charged when departing a non-start stop. The
+goal is the completion time back at the start from time 0.
+
+Call the solve_tsp_tw tool with the coordinates, time windows, service time, and
+speed read from this problem. Do not solve it yourself.

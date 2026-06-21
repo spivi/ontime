@@ -1,0 +1,19 @@
+You are given a set of jobs to run on one machine. There are {n} entries indexed
+0 to {n_minus_1}, with entry 0 the machine in its starting state.
+
+Changeover times between jobs, as a square matrix where entry [i][j] is the time
+to switch from i to j:
+{matrix_lines}
+
+Processing time for each job is {service_time}. Each job has a release time when
+it becomes available and a due time by which it must finish. The machine runs one
+job at a time, starts at time 0, and returns to its starting state at the end. It
+may wait for a release time and cannot start a job after its due time.
+
+Release and due times [release, due] per entry:
+{window_lines}
+
+The goal is the completion time from time 0. Call the solve_tsp_tw tool with the
+cost matrix set to the changeover matrix, the time windows set to the release and
+due times, and the service time set to the processing time. Do not solve it
+yourself.

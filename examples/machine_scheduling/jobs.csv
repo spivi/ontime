@@ -1,0 +1,6 @@
+job,release,due,processing
+start,0,1000,0
+panel A,0,120,4
+panel B,0,90,4
+panel C,10,140,4
+panel D,0,160,4

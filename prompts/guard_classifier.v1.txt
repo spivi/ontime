@@ -1,0 +1,11 @@
+Decide whether the message describes a routing or scheduling problem with stops
+and time windows.
+
+A driving problem names places to visit, each with a window of time when a visit
+is allowed, and a start point. A machine scheduling problem names jobs to run on
+one machine, each with a release time and a due time, with changeover times
+between jobs.
+
+Answer with in_scope set to true or false, a problem_kind of driving,
+machine_scheduling, or unknown, and a short reason. If the message is anything
+else, answer in_scope false with a short reason that says what it looked like.

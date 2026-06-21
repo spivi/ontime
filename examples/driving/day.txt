@@ -1,0 +1,13 @@
+I am running errands today and I want a route that gets me to each place inside
+its time window. I start from home at coordinates (0, 0) at time zero. My speed is
+0.5 distance units per minute and I spend 3 minutes at each stop.
+
+Here are the stops and the windows, in minutes from now.
+
+The pharmacy is at (2, 1) and is open between 30 and 90.
+The hardware store is at (5, 4) and is open between 15 and 40.
+The post office is at (1, 6) and is open between 0 and 30.
+The bakery is at (4, 2) and is open between 25 and 70.
+
+Plan the order, tell me when I arrive at each place, and tell me the time I get
+back home.
